@@ -5,12 +5,12 @@
 #include "xgboost/c_api.h"
 #include <random>
 
-bool FileExists(const std::string name) {
+bool FileExists(const std::string& filename) {
   struct stat st;
-  return stat(name.c_str(), &st) == 0;
+  return stat(filename.c_str(), &st) == 0;
 }
 
-long GetFileSize(const std::string filename) {
+long GetFileSize(const std::string& filename) {
   struct stat st;
   stat(filename.c_str(), &st);
   return st.st_size;
@@ -85,13 +85,14 @@ void CheckRankingObjFunction(xgboost::ObjFunction * obj,
 
 
 xgboost::bst_float GetMetricEval(xgboost::Metric * metric,
-                                 std::vector<xgboost::bst_float> preds,
+                                 xgboost::HostDeviceVector<xgboost::bst_float> preds,
                                  std::vector<xgboost::bst_float> labels,
                                  std::vector<xgboost::bst_float> weights) {
   xgboost::MetaInfo info;
   info.num_row_ = labels.size();
   info.labels_.HostVector() = labels;
   info.weights_.HostVector() = weights;
+
   return metric->Eval(preds, info, false);
 }
 

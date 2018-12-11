@@ -24,9 +24,9 @@
 #define DeclareUnifiedTest(name) name
 #endif
 
-bool FileExists(const std::string name);
+bool FileExists(const std::string& filename);
 
-long GetFileSize(const std::string filename);
+long GetFileSize(const std::string& filename);
 
 void CreateSimpleTestData(const std::string& filename);
 
@@ -49,7 +49,7 @@ void CheckRankingObjFunction(xgboost::ObjFunction * obj,
 
 xgboost::bst_float GetMetricEval(
   xgboost::Metric * metric,
-  std::vector<xgboost::bst_float> preds,
+  xgboost::HostDeviceVector<xgboost::bst_float> preds,
   std::vector<xgboost::bst_float> labels,
   std::vector<xgboost::bst_float> weights = std::vector<xgboost::bst_float> ());
 
